@@ -1,0 +1,43 @@
+ion-content {
+    .horizontalScroll {
+        overflow-x: scroll;
+        white-space: nowrap;
+        .anItem {
+            display: inline-block;
+            width: 105px;
+            margin-right: 5px;
+            img {
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+            p {
+                margin-top: 5px;
+            }
+        }
+    }
+
+    ion-slides {
+        .imageHead {
+            position: absolute;
+            background: #ffffff;
+            border-radius: 30px;
+            margin: 0;
+            padding: 10px 45px;
+            bottom: 35px;
+            left: 20%;
+            box-shadow: 0px 4px 34px rgba(0, 0, 0, 0.03);
+        }
+        img {
+            width: 80%;
+            border-radius: 20px;
+            height: 300px;
+            object-fit: cover;
+        }
+    }
+}
+
+::-webkit-scrollbar {
+    display: none !important;
+}

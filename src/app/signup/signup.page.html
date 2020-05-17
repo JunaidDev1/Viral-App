@@ -1,0 +1,45 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>signup</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="ion-padding bgGradient">
+
+  <div class="ion-text-center white mt-3 mb-2">
+    <img src="./assets/imgs/Logo.png">
+    <h2>Join Us!</h2>
+    <p class="mt-0">Create your account</p>
+  </div>
+
+  <p class="appTxt white mb-0">FULL NAME</p>
+  <ion-item class="loginInputs bg-none rounded" lines="none">
+    <ion-input class="white" type="text" placeholder="Full name"></ion-input>
+  </ion-item>
+
+  <p class="appTxt white mb-0">E-MAIL</p>
+  <ion-item class="loginInputs bg-none rounded" lines="none">
+    <ion-input class="white" type="email" placeholder="Email address"></ion-input>
+  </ion-item>
+
+  <p class="appTxt white mb-0">PHONE NUMBER</p>
+  <ion-item class="loginInputs bg-none rounded" lines="none">
+    <ion-input class="white" type="tel" placeholder="Phone number"></ion-input>
+  </ion-item>
+
+  <p class="appTxt white mb-0">PASSWORD</p>
+  <ion-item class="loginInputs bg-none rounded" lines="none">
+    <ion-input class="white" type="password" placeholder="Password"></ion-input>
+  </ion-item>
+
+  <p class="appTxt white mb-0">CONFIRM PASSWORD</p>
+  <ion-item class="loginInputs bg-none rounded" lines="none">
+    <ion-input class="white" type="password" placeholder="Re-enter password"></ion-input>
+  </ion-item>
+
+  <ion-button routerLink="/tabs" expand="block" color="lighter" class="rounded h-50 mt-1">Signup</ion-button>
+  <ion-button routerLink="/login" routerDirection="back" fill="clear" expand="block" color="lighter" class=" h-50">
+    Already have an account? Login
+  </ion-button>
+
+</ion-content>
