@@ -19,6 +19,11 @@ const routes: Routes = [
             path: 'join-nemesis',
             loadChildren: () =>
               import('../join-nemesis/join-nemesis.module').then(m => m.JoinNemesisPageModule)
+          },
+          {
+            path: 'roast-battle',
+            loadChildren: () =>
+              import('../roast-battle/roast-battle.module').then(m => m.RoastBattlePageModule)
           }
         ]
       },
