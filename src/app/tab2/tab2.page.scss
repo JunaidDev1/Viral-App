@@ -1,0 +1,18 @@
+ion-content {
+    ion-item {
+        margin-bottom: 10px !important;
+        p {
+            ion-icon {
+                position: absolute;
+                bottom: 1.2em;
+            }
+        }
+        ion-avatar {
+            width: 50px;
+            height: 50px;
+        }
+        img {
+            object-fit: cover;
+        }
+    }
+}

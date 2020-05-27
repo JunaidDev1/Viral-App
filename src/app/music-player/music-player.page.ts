@@ -7,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MusicPlayerPage implements OnInit {
 
+  musicList: any = [
+    './assets/imgs/music2.png', './assets/imgs/music3.png', './assets/imgs/music4.png', './assets/imgs/music5.png',
+  ]
+
   constructor() { }
 
   ngOnInit() {

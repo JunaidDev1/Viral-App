@@ -1,9 +1,85 @@
-<ion-header>
+<ion-header class="gradientHeader">
   <ion-toolbar>
-    <ion-title>tab5</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Hot or Not</ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="search" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content fullScreen="true">
+
+  <ion-segment [(ngModel)]="activeTab">
+    <ion-segment-button value="charts">Charts</ion-segment-button>
+    <ion-segment-button value="genre">Genre</ion-segment-button>
+    <ion-segment-button value="featured">Featured</ion-segment-button>
+    <ion-segment-button value="playlist">Playist</ion-segment-button>
+  </ion-segment>
+
+
+  <div class="ion-padding" [(ngSwitch)]="activeTab">
+    <div *ngSwitchCase="'charts'"></div>
+    <div *ngSwitchCase="'genre'"></div>
+
+    <div *ngSwitchCase="'featured'">
+      <div class="ion-text-center">
+        <img src="./assets/imgs/music1.png">
+        <p class="dark bold">The Project Delinium</p>
+        <p class="mt-0"><small>
+            Details is the sole studio album by the musical group Frou Frou.
+            State and in the movie The Project delirium
+          </small></p>
+      </div>
+
+      <h5 class="bold">Songs</h5>
+
+      <ion-row class="musicList">
+        <ion-col *ngFor="let music of musicList" size="6">
+          <div class="anItem bg-white rounded">
+            <img [src]="music">
+            <ion-item class="rounded" lines="none">
+              <ion-label class="mt-0">
+                <h5>Song</h5>
+                <p>Las Vegas</p>
+              </ion-label>
+              <ion-icon class="mt-0" size="small" color="medium" name="ellipsis-vertical" slot="end"></ion-icon>
+            </ion-item>
+          </div>
+        </ion-col>
+      </ion-row>
+    </div>
+
+    <div *ngSwitchCase="'playlist'"></div>
+  </div>
 
 </ion-content>
+
+<ion-footer>
+  <ion-row>
+    <ion-col routerLink="/music-player" size="3">
+      <img class="rounded" src="./assets/imgs/music4.png">
+    </ion-col>
+    <ion-col size="9">
+      <ion-range min="0" max="5"></ion-range>
+      <p class="rangebarTime white">
+        <small><span class="ion-float-right">3:45</span></small>
+      </p>
+      <ion-item class="ion-no-padding bg-none mt-0" lines="none">
+        <ion-label routerLink="/music-player">
+          <h5 class="white">Eille</h5>
+          <p class="white">Las Vegas</p>
+        </ion-label>
+        <p slot="end">
+          <ion-icon name="play-skip-back-circle-outline"></ion-icon>
+          <ion-icon class="playIcon" name="play-circle-outline"></ion-icon>
+          <ion-icon name="play-skip-forward-circle-outline"></ion-icon>
+        </p>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</ion-footer>

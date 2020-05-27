@@ -1,9 +1,9 @@
 ion-content {
     .storyItem {
         height: 150px;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
+        background-position: center !important;
+        background-repeat: no-repeat !important;
+        background-size: cover !important;
         position: relative;
     }
     ion-item {
@@ -19,6 +19,7 @@ ion-content {
             width: 30px;
             height: 30px;
             padding: 2px;
+            margin-right: 6px;
             border: 1px solid var(--ion-color-primary);
         }
         p,

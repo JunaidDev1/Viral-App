@@ -32,7 +32,7 @@
 
   <div *ngIf="activeTab=='feed'">
     <div *ngFor="let post of allPosts" class="newsFeedPost bg-white rounded mb-1">
-      <ion-item class="rounded" lines="none">
+      <ion-item detail="false" routerLink="/others-profile" class="rounded" lines="none">
         <ion-avatar slot="start">
           <img [src]="post.userImg">
         </ion-avatar>

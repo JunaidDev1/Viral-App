@@ -7,7 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Tab3Page implements OnInit {
 
-  img= '/assets/imgs/user1.png'
+  imgs: any = [
+    '/assets/imgs/story1.png', '/assets/imgs/story2.png', '/assets/imgs/story3.png', '/assets/imgs/story4.png',
+    '/assets/imgs/post1.png', '/assets/imgs/post2.png', '/assets/imgs/user5.png', '/assets/imgs/story1.png'
+  ]
 
   constructor() { }
 

@@ -1,9 +1,36 @@
-<ion-header>
+<ion-header class="gradientHeader">
   <ion-toolbar>
-    <ion-title>tab2</ion-title>
+    <ion-title>chats</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="tertiary" fill="solid" shape="round">Compose</ion-button>
+    </ion-buttons>
   </ion-toolbar>
+  <div style="padding: 0 16px 16px 16px;">
+    <ion-item class="rounded" lines="none">
+      <ion-avatar slot="start">
+        <img src="./assets/imgs/search (2).png">
+      </ion-avatar>
+      <ion-input type="text" placeholder="Search..."></ion-input>
+    </ion-item>
+  </div>
 </ion-header>
 
-<ion-content>
+<ion-content color="lighter" class="ion-padding" fullScreen="true">
+
+  <ion-item *ngFor="let item of dummyItems; index as i" class="borderBottom ion-no-padding" lines="none">
+    <ion-avatar slot="start">
+      <img src="./assets/imgs/Profile.png">
+    </ion-avatar>
+    <ion-label>
+      <h5 class="fw500">Angelina Julie</h5>
+      <p class="appTxt">
+        <ion-icon color="{{i%2===0? 'primary': medium}}" name="checkmark-done-outline"></ion-icon>
+        <span style="margin-left: 16px;">Great, Thank you so much!</span>
+      </p>
+    </ion-label>
+    <p class="gray" slot="end">
+      <small>11:40 AM</small>
+    </p>
+  </ion-item>
 
 </ion-content>
