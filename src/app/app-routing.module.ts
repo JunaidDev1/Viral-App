@@ -54,6 +54,14 @@ const routes: Routes = [
     path: 'edit-profile',
     loadChildren: () => import('./edit-profile/edit-profile.module').then(m => m.EditProfilePageModule)
   },
+  {
+    path: 'chat-screen',
+    loadChildren: () => import('./chat-screen/chat-screen.module').then( m => m.ChatScreenPageModule)
+  },
+  {
+    path: 'advance-search',
+    loadChildren: () => import('./advance-search/advance-search.module').then( m => m.AdvanceSearchPageModule)
+  },
 ];
 
 @NgModule({

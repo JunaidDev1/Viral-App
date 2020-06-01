@@ -14,10 +14,35 @@ export class AppComponent implements OnInit {
   public selectedIndex = 0;
   public appPages = [
     {
+      title: 'Home',
+      url: '/tabs/tab1',
+      icon: './assets/imgs/home.png'
+    },
+    {
+      title: 'Hot Or Not',
+      url: '/tabs/tab5',
+      icon: './assets/imgs/hot.png'
+    },
+    {
+      title: 'Invite',
+      url: '/tabs/tab1',
+      icon: './assets/imgs/invite.png'
+    },
+    {
+      title: 'About Us',
+      url: '/tabs/tab1',
+      icon: './assets/imgs/about-us.png'
+    },
+    {
+      title: 'Settings',
+      url: '/tabs/tab1',
+      icon: './assets/imgs/settings.png'
+    },
+    {
       title: 'Logout',
       url: '/login',
-      icon: 'log-out'
-    }
+      icon: './assets/imgs/logout.png'
+    },
   ];
 
   constructor(

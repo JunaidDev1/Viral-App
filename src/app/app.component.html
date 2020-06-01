@@ -1,18 +1,29 @@
 <ion-app>
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="overlay">
-      <ion-content color="lighter">
-        <ion-list id="inbox-list">
-          <ion-list-header>Inbox</ion-list-header>
-          <ion-note>hi@ionicframework.com</ion-note>
-
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
-            <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none"
-              detail="false" [class.selected]="selectedIndex == i">
-              <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
-              <ion-label>{{ p.title }}</ion-label>
+      <ion-content class="bgGradient">
+        <ion-list class="bg-none mt-3" id="inbox-list">
+          <div class="profileInfo ion-text-center">
+            <img src="./assets/imgs/user3.png">
+            <ion-item class="bg-none" lines="none">
+              <ion-label class="ion-text-center">
+                <h5 class="white">Samantha</h5>
+                <p class="white">samanthadoe@gmail.com</p>
+              </ion-label>
             </ion-item>
-          </ion-menu-toggle>
+          </div>
+
+          <div class="ion-padding">
+            <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
+              <ion-item class="rounded mb-1" (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]"
+                lines="none" detail="false" [class.selected]="selectedIndex == i">
+                <img slot="start" [src]="p.icon">
+                <ion-label>
+                  <h5>{{ p.title }}</h5>
+                </ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </div>
         </ion-list>
 
       </ion-content>

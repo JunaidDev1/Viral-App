@@ -17,7 +17,8 @@
 
 <ion-content color="lighter" class="ion-padding" fullScreen="true">
 
-  <ion-item *ngFor="let item of dummyItems; index as i" class="borderBottom ion-no-padding" lines="none">
+  <ion-item routerLink="/chat-screen" detail="false" *ngFor="let item of dummyItems; index as i"
+    class="borderBottom ion-no-padding" lines="none">
     <ion-avatar slot="start">
       <img src="./assets/imgs/Profile.png">
     </ion-avatar>

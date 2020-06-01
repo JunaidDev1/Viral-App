@@ -1,0 +1,52 @@
+<ion-header class="gradientHeader">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>advance search</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content fullScree="true">
+
+  <ion-grid class="ion-padding">
+    <ion-item lines="none" class="rounded mb-1">
+      <ion-input type="text" placeholder="Name"></ion-input>
+    </ion-item>
+    <ion-item lines="none" class="rounded mb-1">
+      <ion-input type="number" placeholder="Age"></ion-input>
+    </ion-item>
+    <ion-item lines="none" class="rounded mb-1">
+      <ion-select placeholder="Gender">
+        <ion-select-option>Male</ion-select-option>
+        <ion-select-option>Female</ion-select-option>
+        <ion-select-option>Other</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item lines="none" class="rounded mb-1">
+      <ion-select placeholder="City">
+        <ion-select-option>Alpha</ion-select-option>
+        <ion-select-option>Beta</ion-select-option>
+        <ion-select-option>Gama</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-button expand="block" class="rounded h-50 mb-1 mt-1">Search</ion-button>
+  </ion-grid>
+
+
+  <ion-row class="userList">
+    <ion-col *ngFor="let user of users" size="4">
+      <div class="anItem ion-text-center bg-white rounded lightshadow">
+        <img [src]="user.img">
+        <span class="onlineSymbol"></span>
+        <p class="dark ion-no-margin">
+          <small>Angelina Julie</small>
+        </p>
+      </div>
+    </ion-col>
+  </ion-row>
+
+
+</ion-content>
