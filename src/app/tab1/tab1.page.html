@@ -105,12 +105,12 @@
 
 
   <ion-fab *ngIf="activeTab=='feed'" class="mb-5" slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button>
+    <ion-fab-button routerLink="/tabs/tab5" routerDirection="root">
       <img src="./assets/imgs/music.png">
     </ion-fab-button>
   </ion-fab>
   <ion-fab *ngIf="activeTab=='feed'" slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button>
+    <ion-fab-button (click)="createPost=true">
       <img src="./assets/imgs/create.png">
     </ion-fab-button>
   </ion-fab>
@@ -122,3 +122,23 @@
   </ion-fab>
 
 </ion-content>
+
+<div (click)="closeModal($event)" id="mainContainer" *ngIf="createPost" class="createPostSheet">
+  <div class="innerContent bg-white ion-padding-start">
+    <p (click)="createPost=false" class="ion-text-center ion-no-margin ion-padding pt-0">
+      <span class="closeBar">123</span>
+    </p>
+    <p class="gray appTxt mt-0">
+      <img src="./assets/imgs/lock 1.png"> Createa post
+    </p>
+    <ion-item lines="none">
+      <ion-textarea rows="3" placeholder="Write here..."></ion-textarea>
+    </ion-item>
+    <ion-item lines="none">
+      <img slot="start" src="./assets/imgs/Attach Image.png">
+      <img slot="start" src="./assets/imgs/Article.png">
+      <img slot="start" src="./assets/imgs/Location.png">
+      <ion-button (click)="createPost=false" fill="clear" slot="end">Post</ion-button>
+    </ion-item>
+  </div>
+</div>

@@ -11,11 +11,16 @@ export class SearchContactPage implements OnInit {
     { img: './assets/imgs/user12.png' },
     { img: './assets/imgs/user4.png' },
     { img: './assets/imgs/user5.png' },
-  ]
+    { img: './assets/imgs/story1.png' },
+    { img: './assets/imgs/user12.png' },
+    { img: './assets/imgs/user4.png' },
+    { img: './assets/imgs/user5.png' },
+    { img: './assets/imgs/story1.png' },
+  ];
 
   slideOpts = {
-    autoplay: true,
-    speed: 400,
+    initialSlide: 1,
+    slidesPerView: 2
   };
 
   constructor() { }
