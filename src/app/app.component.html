@@ -3,15 +3,16 @@
     <ion-menu contentId="main-content" type="overlay">
       <ion-content class="bgGradient">
         <ion-list class="bg-none mt-3" id="inbox-list">
-          <div class="profileInfo ion-text-center">
+          <ion-menu-toggle (click)="toProfile()" style="display: block;" auto-hide="false"
+            class="profileInfo ion-text-center">
             <img src="./assets/imgs/user3.png">
             <ion-item class="bg-none" lines="none">
               <ion-label class="ion-text-center">
-                <h5 class="white">Samantha</h5>
-                <p class="white">samanthadoe@gmail.com</p>
+                <h5 style="text-transform: none;" class="white">Samantha</h5>
+                <p style="text-transform: none;" class="white">samanthadoe@gmail.com</p>
               </ion-label>
             </ion-item>
-          </div>
+          </ion-menu-toggle>
 
           <div class="ion-padding">
             <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">

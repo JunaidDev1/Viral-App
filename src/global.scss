@@ -196,6 +196,7 @@ ion-content {
             ion-button {
                 height: 60px;
                 font-size: 12px;
+                --ripple-color: transparent;
             }
             .imgContainer {
                 width: 40px;
@@ -224,7 +225,7 @@ ion-content {
 }
 
 ion-header {
-   ion-slides{
-    --bullet-background-active: #ffffff !important;
-   }
+    ion-slides {
+        --bullet-background-active: #ffffff !important;
+    }
 }

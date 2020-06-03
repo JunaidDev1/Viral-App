@@ -1,0 +1,83 @@
+ion-header {
+    background-image: url("/assets/imgs/Bg Shapes (1).png"), linear-gradient(92.89deg, #ff714d -9.4%, #ff4244 111.54%) !important;
+
+    ion-slides {
+        padding: 1em 0 2em 0;
+    }
+    .overlayCurve {
+        width: 100%;
+        margin-top: -2em;
+        height: 60px;
+        margin-bottom: -1em;
+    }
+    .userInfo {
+        ion-col {
+            padding: 0;
+            .userImg {
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                object-fit: cover;
+                border: 5px solid #ffffff;
+            }
+            p {
+                width: 80px;
+                height: 80px;
+                display: inline-block;
+                border-radius: 50%;
+                padding-top: 1.6em;
+                box-shadow: 0px 4px 34px rgba(0, 0, 0, 0.25);
+                &.pt-5 {
+                    padding-top: 2.5em;
+                }
+            }
+        }
+    }
+}
+
+ion-content {
+    .segmentContainer {
+        padding: 0 10px;
+        border-top: 1px solid #dedede;
+        border-bottom: 1px solid #dedede;
+
+        ion-segment-button {
+            text-transform: none !important;
+        }
+    }
+
+    ion-slides {
+        padding: 10px;
+        .anItem {
+            display: inline-block;
+            width: 140px;
+            margin-right: 5px;
+            position: relative;
+            padding-bottom: 0;
+
+            .mainImg {
+                width: 135px;
+                height: 135px;
+                object-fit: cover;
+                border-radius: 10px;
+            }
+
+            .absoluteIcon {
+                width: 25px;
+                position: absolute;
+                right: 12px;
+                top: 12px;
+            }
+            p {
+                position: absolute;
+                width: 100%;
+                bottom: 0;
+                left: 1em;
+                text-align: left;
+                img {
+                    width: 14px;
+                }
+            }
+        }
+    }
+}

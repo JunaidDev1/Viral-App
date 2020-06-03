@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActionSheetController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab1',
@@ -13,6 +15,7 @@ export class Tab1Page implements OnInit {
     autoplay: true,
     speed: 400,
   };
+  rotation = 0;
 
   allPosts: any = [
     { userImg: './assets/imgs/user6.png', img: './assets/imgs/post1.png' },
@@ -20,9 +23,29 @@ export class Tab1Page implements OnInit {
     { userImg: './assets/imgs/user8.png', img: './assets/imgs/post3.png' },
   ];
 
-  constructor() { }
+  constructor(
+    public router: Router,
+    public actionSheetCtrl: ActionSheetController
+  ) { }
+
 
   ngOnInit() {
+    setInterval(() => {
+      this.rotateMusicIcon();
+    }, 30);
+  }
+
+
+  rotateMusicIcon() {
+    this.rotation++;
+    if (this.rotation === 360) {
+      this.rotation = 0;
+    }
+  }
+
+
+  othersProfile() {
+    this.router.navigate(['/others-profile']);
   }
 
 
@@ -31,5 +54,44 @@ export class Tab1Page implements OnInit {
       this.createPost = false;
     }
   }
+
+
+  async presentActionSheet() {
+    const actionSheet = await this.actionSheetCtrl.create({
+      buttons: [{
+        text: 'Add to story',
+        handler: () => {
+
+        }
+      }, {
+        text: 'Forward to friend',
+        handler: () => {
+
+        }
+      }, {
+        text: 'Unfollow',
+        handler: () => {
+
+        }
+      }, {
+        text: 'Block',
+        handler: () => {
+
+        }
+      }, {
+        text: 'Report',
+        handler: () => {
+
+        }
+      }, {
+        text: 'Turn on post notifications',
+        handler: () => {
+
+        }
+      }]
+    });
+    await actionSheet.present();
+  }
+
 
 }

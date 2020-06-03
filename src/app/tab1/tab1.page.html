@@ -7,7 +7,7 @@
       <img src="./assets/imgs/Logo.png">
     </ion-title>
     <ion-buttons slot="end">
-      <ion-button routerLink="/search-contact">
+      <ion-button routerLink="/advance-search">
         <ion-icon name="search" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -32,15 +32,15 @@
 
   <div *ngIf="activeTab=='feed'">
     <div *ngFor="let post of allPosts" class="newsFeedPost bg-white rounded mb-1">
-      <ion-item detail="false" routerLink="/others-profile" class="rounded" lines="none">
-        <ion-avatar slot="start">
+      <ion-item class="rounded" lines="none">
+        <ion-avatar (click)="othersProfile()" slot="start">
           <img [src]="post.userImg">
         </ion-avatar>
-        <ion-label>
+        <ion-label (click)="othersProfile()">
           <h5 class="dark">John Mike <small class="gray">Posted a text</small></h5>
           <p>May 26 at 09:18 AM</p>
         </ion-label>
-        <ion-icon name="chevron-down" slot="end" color="primary"></ion-icon>
+        <ion-icon (click)="presentActionSheet()" name="chevron-down" slot="end" color="primary"></ion-icon>
       </ion-item>
       <div style="padding: 5px 16px;" class="ion-text-center">
         <img class="rounded w-100" [src]="post.img">
@@ -105,7 +105,7 @@
 
 
   <ion-fab *ngIf="activeTab=='feed'" class="mb-5" slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button routerLink="/tabs/tab5" routerDirection="root">
+    <ion-fab-button [style.transform]="'rotate(' + rotation + 'deg)'">
       <img src="./assets/imgs/music.png">
     </ion-fab-button>
   </ion-fab>
