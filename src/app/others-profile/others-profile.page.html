@@ -73,23 +73,25 @@
     </ion-segment>
   </div>
 
-  <div class="horizontalScroll ion-padding-start">
-    <div *ngFor="let item of dummyItems" class="anItem ion-text-center">
-      <img class="mainImg" src="./assets/imgs/gallery.png">
-      <img class="absoluteIcon" src="./assets/imgs/images.png">
-      <p class="white appTxt">
-        <img src="./assets/imgs/clock 1.png"> 12 min ago
-      </p>
-    </div>
-  </div>
-  <div class="horizontalScroll ion-padding-start">
-    <div *ngFor="let item of dummyItems" class="anItem ion-text-center">
-      <img class="mainImg" src="./assets/imgs/gallery.png">
-      <img class="absoluteIcon" src="./assets/imgs/images.png">
-      <p class="white appTxt">
-        <img src="./assets/imgs/clock 1.png"> 12 min ago
-      </p>
-    </div>
-  </div>
+  <ion-slides [options]="slideOpts">
+    <ion-slide *ngFor="let item of dummyItems">
+      <ion-row>
+        <ion-col class="anItem" size="12">
+          <img src="./assets/imgs/gallery.png">
+          <img class="absoluteIcon" src="./assets/imgs/images.png">
+          <p class="white appTxt">
+            <img src="./assets/imgs/clock 1.png"> 12 min ago
+          </p>
+        </ion-col>
+        <ion-col class="anItem" size="12">
+          <img src="./assets/imgs/gallery.png">
+          <img class="absoluteIcon" src="./assets/imgs/images.png">
+          <p class="white appTxt">
+            <img src="./assets/imgs/clock 1.png"> 12 min ago
+          </p>
+        </ion-col>
+      </ion-row>
+    </ion-slide>
+  </ion-slides>
 
 </ion-content>
