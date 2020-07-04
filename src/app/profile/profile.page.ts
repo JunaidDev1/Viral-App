@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import * as firebase from 'firebase';
+import { DataCollectorService } from '../data-collector.service';
+import { UtilsService } from '../utils.service';
 
 @Component({
   selector: 'app-profile',
@@ -13,10 +16,24 @@ export class ProfilePage implements OnInit {
     initialSlide: 0,
     slidesPerView: 2.3
   };
+  userObj:any;
 
-  constructor() { }
+  constructor(public service:DataCollectorService,public utils:UtilsService) { }
 
   ngOnInit() {
+  }
+  ionViewWillEnter() {
+    var self = this;
+    firebase.database().ref().child('users/' + localStorage.getItem('uid'))
+      .once('value', (snapshot) => {
+        var user = snapshot.val();
+        if (user) {
+          self.userObj = user;
+          this.service.userObj = self.userObj;
+        }
+      }).catch((e) => {
+        self.utils.createToast(e.message);
+      });
   }
 
 }

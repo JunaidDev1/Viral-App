@@ -33,13 +33,11 @@ ion-header {
     height: 100%;
     z-index: 999999;
     background: rgba(0, 0, 0, 0.5);
-
     .innerContent {
         border-radius: 16px 16px 0 0;
         position: absolute;
         width: 100%;
         bottom: 0;
-
         .closeBar {
             border-radius: 10px;
             background: #e4e4e7;
@@ -54,4 +52,18 @@ ion-header {
             }
         }
     }
+}
+
+.imgPost {
+    width: 75px !important;
+    height: 75px !important;
+    object-fit: contain !important;
+}
+
+.crossIcon {
+    position: absolute;
+    z-index: 9999;
+    top: 15px;
+    right: 6px;
+    color: red;
 }

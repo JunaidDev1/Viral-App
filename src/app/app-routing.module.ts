@@ -43,7 +43,7 @@ const routes: Routes = [
     loadChildren: () => import('./profile/profile.module').then(m => m.ProfilePageModule)
   },
   {
-    path: 'others-profile',
+    path: 'others-profile/:id',
     loadChildren: () => import('./others-profile/others-profile.module').then(m => m.OthersProfilePageModule)
   },
   {
@@ -55,12 +55,48 @@ const routes: Routes = [
     loadChildren: () => import('./edit-profile/edit-profile.module').then(m => m.EditProfilePageModule)
   },
   {
-    path: 'chat-screen',
+    path: 'chat-screen/:id',
     loadChildren: () => import('./chat-screen/chat-screen.module').then( m => m.ChatScreenPageModule)
   },
   {
     path: 'advance-search',
     loadChildren: () => import('./advance-search/advance-search.module').then( m => m.AdvanceSearchPageModule)
+  },
+  {
+    path: 'select-contact',
+    loadChildren: () => import('./select-contact/select-contact.module').then( m => m.SelectContactPageModule)
+  },
+  {
+    path: 'confirm-contact',
+    loadChildren: () => import('./confirm-contact/confirm-contact.module').then( m => m.ConfirmContactPageModule)
+  },
+  {
+    path: 'settings',
+    loadChildren: () => import('./settings/settings.module').then( m => m.SettingsPageModule)
+  },
+  {
+    path: 'chnage-password',
+    loadChildren: () => import('./chnage-password/chnage-password.module').then( m => m.ChnagePasswordPageModule)
+  },
+  {
+    path: 'blocked-list',
+    loadChildren: () => import('./blocked-list/blocked-list.module').then( m => m.BlockedListPageModule)
+  },
+  {
+    path: 'contact-us',
+    loadChildren: () => import('./contact-us/contact-us.module').then( m => m.ContactUsPageModule)
+  },
+  {
+    path: 'about-us',
+    loadChildren: () => import('./about-us/about-us.module').then( m => m.AboutUsPageModule)
+  },
+  {
+    path: 'terms-services',
+    loadChildren: () => import('./terms-services/terms-services.module').then( m => m.TermsServicesPageModule)
+  },
+  {
+    path: 'image-viewer',
+    loadChildren: () => import('./image-viewer/image-viewer.module').then( m => m.ImageViewerPageModule)
   },
 ];
 

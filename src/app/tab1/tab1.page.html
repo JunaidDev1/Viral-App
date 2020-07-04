@@ -1,144 +1,167 @@
 <ion-header class="gradientHeader">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>
-      <img src="./assets/imgs/Logo.png">
-    </ion-title>
-    <ion-buttons slot="end">
-      <ion-button routerLink="/advance-search">
-        <ion-icon name="search" slot="icon-only"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-  <ion-row class="segmentBtns">
-    <ion-col size="6">
-      <ion-button fill="clear" (click)="activeTab='feed'" [class.inactiveTab]="activeTab!='feed'"
-        [class.activeTab]="activeTab=='feed'" class="leftBtn" shape="round" expand="block">
-        <img src="./assets/imgs/tab1.png"> Feed
-      </ion-button>
-    </ion-col>
-    <ion-col size="6">
-      <ion-button fill="clear" (click)="activeTab='nemesis'" [class.inactiveTab]="activeTab!='nemesis'"
-        [class.activeTab]="activeTab=='nemesis'" class="rightBtn" shape="round" expand="block">
-        Nemesis <img src="./assets/imgs/tab2.png">
-      </ion-button>
-    </ion-col>
-  </ion-row>
+    <ion-toolbar mode="ios">
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>
+            <img src="./assets/imgs/Logo.png">
+        </ion-title>
+        <ion-buttons slot="end">
+            <ion-button routerLink="/advance-search" color="light">
+                <ion-icon name="search" slot="icon-only"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+    <ion-row class="segmentBtns">
+        <ion-col size="6">
+            <ion-button fill="clear" (click)="activeTab='feed'" [class.inactiveTab]="activeTab!='feed'" [class.activeTab]="activeTab=='feed'" class="leftBtn" shape="round" expand="block">
+                <img src="./assets/imgs/tab1.png"> Feed
+            </ion-button>
+        </ion-col>
+        <ion-col size="6">
+            <ion-button fill="clear" (click)="activeTab='nemesis'" [class.inactiveTab]="activeTab!='nemesis'" [class.activeTab]="activeTab=='nemesis'" class="rightBtn" shape="round" expand="block">
+                Nemesis <img src="./assets/imgs/tab2.png">
+            </ion-button>
+        </ion-col>
+    </ion-row>
 </ion-header>
 
-<ion-content fullScreen="true" class="ion-padding">
+<ion-content fullScreen="true" [scrollEvents]="true" (ionScroll)="didScroll($event)">
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown" refreshingSpinner="circles">
+        </ion-refresher-content>
+    </ion-refresher>
+    <div *ngIf="activeTab=='feed'">
+        <div *ngFor="let post of allPosts" class="newsFeedPost bg-white rounded mb-1">
+            <ion-item class="rounded" lines="none">
+                <ion-avatar (click)="othersProfile(post.uid)" slot="start">
+                    <img [src]="service.usersData[post.uid].profileUrl || './assets/imgs/user3.png'">
+                </ion-avatar>
+                <ion-label>
+                    <h5 class="dark">{{service.usersData[post.uid].fullName}} <small class="gray">Posted a text</small></h5>
+                    <p>{{post.timestamp | date:'MMM d'}} at {{post.timestamp | date:'h:mm a'}}</p>
+                </ion-label>
+                <ion-icon (click)="presentActionSheet()" name="chevron-down" slot="end" color="primary"></ion-icon>
+            </ion-item>
+            <div *ngIf="post.postImages">
+                <img class="w-100" [src]="post.postImages" (click)="viewImage(post.postImages)" style="height: 100%;">
+            </div>
+            <div *ngIf="post.postVideos">
+                <video controls class="w-100" (playing)="onPlayingVideo($event)" #player playsinline preload="auto" [poster]="post.postVideos" height="240" style="object-fit: cover !important;">
+                <source  [src]="post.postVideos" type="video/mp4">
+              </video>
 
-  <div *ngIf="activeTab=='feed'">
-    <div *ngFor="let post of allPosts" class="newsFeedPost bg-white rounded mb-1">
-      <ion-item class="rounded" lines="none">
-        <ion-avatar (click)="othersProfile()" slot="start">
-          <img [src]="post.userImg">
-        </ion-avatar>
-        <ion-label (click)="othersProfile()">
-          <h5 class="dark">John Mike <small class="gray">Posted a text</small></h5>
-          <p>May 26 at 09:18 AM</p>
-        </ion-label>
-        <ion-icon (click)="presentActionSheet()" name="chevron-down" slot="end" color="primary"></ion-icon>
-      </ion-item>
-      <div style="padding: 5px 16px;" class="ion-text-center">
-        <img class="rounded w-100" [src]="post.img">
-      </div>
-      <ion-item lines="none">
-        <ion-label class="ion-text-wrap mb-0">
-          <p>It is a long established fact that a reader will be distracted by the readable content.</p>
-        </ion-label>
-      </ion-item>
-      <ion-item lines="none">
-        <ion-label>
-          <p>2000 Likes</p>
-        </ion-label>
-        <ion-label>
-          <p>124 Dislikes</p>
-        </ion-label>
-        <ion-label>
-          <p>1119 Comments</p>
-        </ion-label>
-      </ion-item>
-      <hr />
-      <ion-row class="socialBtns">
-        <ion-col size="4">
-          <ion-button [class.activeBtn]="post.socialStatus=='liked'" (click)="post.socialStatus='liked'"
-            [class.gray]="post.socialStatus!='liked'" expand="block" class="ion-no-padding ion-no-margin" fill="clear">
-            <div class="imgContainer">
-              <img src="./assets/imgs/like.png">
-            </div> Like
-          </ion-button>
-        </ion-col>
-        <ion-col size="4">
-          <ion-button [class.activeBtn]="post.socialStatus=='disliked'" (click)="post.socialStatus='disliked'"
-            [class.gray]="post.socialStatus!='disliked'" expand="block" class="ion-no-padding ion-no-margin"
-            fill="clear">
-            <div class="imgContainer">
-              <img src="./assets/imgs/dislike.png">
-            </div> Dislike
-          </ion-button>
-        </ion-col>
-        <ion-col size="4">
-          <ion-button expand="block" class="ion-no-padding ion-no-margin gray" fill="clear">
-            <div class="imgContainer">
-              <img src="./assets/imgs/comment.png">
-            </div> Comment
-          </ion-button>
-        </ion-col>
-      </ion-row>
+            </div>
+            <ion-item lines="none">
+                <ion-label class="ion-text-wrap mb-0">
+                    <p>{{post.postMessage}}</p>
+                </ion-label>
+            </ion-item>
+            <ion-item lines="none">
+                <ion-label>
+                    <p>2000 Likes</p>
+                </ion-label>
+                <ion-label>
+                    <p>124 Dislikes</p>
+                </ion-label>
+                <ion-label>
+                    <p>1119 Comments</p>
+                </ion-label>
+            </ion-item>
+            <hr />
+            <ion-row class="socialBtns">
+                <ion-col size="4">
+                    <ion-button [class.activeBtn]="post.likes?.includes(this.uid)" (click)="toLike(post)" [class.gray]="!post.likes?.includes(this.uid)" expand="block" class="ion-no-padding ion-no-margin" fill="clear">
+                        <div class="imgContainer">
+                            <img src="./assets/imgs/like.png">
+                        </div> Like
+                    </ion-button>
+                </ion-col>
+                <ion-col size="4">
+                    <ion-button [class.activeBtn]="post.dislikes?.includes(this.uid)" (click)="toDislike(post)" [class.gray]="!post.dislikes?.includes(this.uid)" expand="block" class="ion-no-padding ion-no-margin" fill="clear">
+                        <div class="imgContainer">
+                            <img src="./assets/imgs/dislike.png">
+                        </div> Dislike
+                    </ion-button>
+                </ion-col>
+                <ion-col size="4">
+                    <ion-button expand="block" class="ion-no-padding ion-no-margin gray" fill="clear">
+                        <div class="imgContainer">
+                            <img src="./assets/imgs/comment.png">
+                        </div> Comment
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+        </div>
     </div>
-  </div>
 
 
-  <div *ngIf="activeTab=='nemesis'">
-    <ion-slides style="height: 60vh;" pager="true" [options]="slideOpts">
-      <ion-slide>
-        <img src="./assets/imgs/slide1.png">
-      </ion-slide>
-      <ion-slide>
-        <img src="./assets/imgs/slide2.png">
-      </ion-slide>
-    </ion-slides>
-  </div>
+    <div *ngIf="activeTab=='nemesis'">
+        <ion-slides style="height: 60vh;" pager="true" [options]="slideOpts">
+            <ion-slide>
+                <img src="./assets/imgs/slide1.png">
+            </ion-slide>
+            <ion-slide>
+                <img src="./assets/imgs/slide2.png">
+            </ion-slide>
+        </ion-slides>
+    </div>
 
 
-  <ion-fab *ngIf="activeTab=='feed'" class="mb-5" slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button [style.transform]="'rotate(' + rotation + 'deg)'">
-      <img src="./assets/imgs/music.png">
-    </ion-fab-button>
-  </ion-fab>
-  <ion-fab *ngIf="activeTab=='feed'" slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button (click)="createPost=true">
-      <img src="./assets/imgs/create.png">
-    </ion-fab-button>
-  </ion-fab>
+    <ion-fab *ngIf="activeTab=='feed' && service.currentMusic" class="mb-5" slot="fixed" vertical="bottom" horizontal="end">
+        <ion-fab-button [style.transform]="'rotate(' + rotation + 'deg)'" routerLink="/tabs/tab5">
+            <img src="./assets/imgs/music.png">
+        </ion-fab-button>
+    </ion-fab>
+    <ion-fab *ngIf="activeTab=='feed'" slot="fixed" vertical="bottom" horizontal="end">
+        <ion-fab-button (click)="createPost=true">
+            <img src="./assets/imgs/create.png">
+        </ion-fab-button>
+    </ion-fab>
 
-  <ion-fab *ngIf="activeTab=='nemesis'" slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button routerLink="/tabs/tab1/join-nemesis">
-      <img src="./assets/imgs/Mask Group.png">
-    </ion-fab-button>
-  </ion-fab>
+    <ion-fab *ngIf="activeTab=='nemesis'" slot="fixed" vertical="bottom" horizontal="end">
+        <ion-fab-button routerLink="/tabs/tab1/join-nemesis">
+            <img src="./assets/imgs/Mask Group.png">
+        </ion-fab-button>
+    </ion-fab>
 
 </ion-content>
 
 <div (click)="closeModal($event)" id="mainContainer" *ngIf="createPost" class="createPostSheet">
-  <div class="innerContent bg-white ion-padding-start">
-    <p (click)="createPost=false" class="ion-text-center ion-no-margin ion-padding pt-0">
-      <span class="closeBar">123</span>
-    </p>
-    <p class="gray appTxt mt-0">
-      <img src="./assets/imgs/lock 1.png"> Createa post
-    </p>
-    <ion-item lines="none">
-      <ion-textarea rows="3" placeholder="Write here..."></ion-textarea>
-    </ion-item>
-    <ion-item lines="none">
-      <img slot="start" src="./assets/imgs/Attach Image.png">
-      <img slot="start" src="./assets/imgs/Article.png">
-      <img slot="start" src="./assets/imgs/Location.png">
-      <ion-button (click)="createPost=false" fill="clear" slot="end">Post</ion-button>
-    </ion-item>
-  </div>
+    <div class="innerContent bg-white ion-padding-start">
+        <p (click)="createPost=false" class="ion-text-center ion-no-margin ion-padding pt-0">
+            <span class="closeBar">123</span>
+        </p>
+        <p class="gray appTxt mt-0">
+            <img src="./assets/imgs/lock 1.png"> Create a post
+        </p>
+        <ion-item lines="none">
+            <ion-textarea rows="3" [(ngModel)]="postMessage" placeholder="Write here..."></ion-textarea>
+        </ion-item>
+
+        <ion-row *ngIf="postImgUrl.length" class=" ion-padding">
+            <ion-col size="3" *ngFor="let image of postImgUrl;">
+                <img class="rounded imgPost" [src]="image" style="position: relative;">
+                <ion-icon name="close" class="crossIcon" (click)="this.postImgUrl=[]"></ion-icon>
+            </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="postVideoUrl.length" class=" ion-padding">
+            <ion-col size="3" *ngFor="let video of postVideoUrl;">
+                <video controls class="imgPost">
+                <source [src]="video"   type="video/mp4">
+              </video>
+                <ion-icon name="close" class="crossIcon" (click)="this.postVideoUrl=[]"></ion-icon>
+            </ion-col>
+        </ion-row>
+
+
+        <input id="galleryMedia" style="display: none;" type="file" accept="image/jpeg, image/png, video/mp4" (change)="onChangeFileGallery($event)">
+        <ion-item lines="none">
+            <img slot="start" (click)="toGalleryMedia()" src="./assets/imgs/Attach Image.png">
+            <img slot="start" src="./assets/imgs/Article.png">
+            <img slot="start" src="./assets/imgs/Location.png">
+            <ion-button (click)="savePost()" fill="clear" slot="end">Post</ion-button>
+        </ion-item>
+    </div>
 </div>

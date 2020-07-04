@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { DataCollectorService } from '../data-collector.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { NavController } from '@ionic/angular';
+import { UtilsService } from '../utils.service';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +12,92 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginPage implements OnInit {
 
-  constructor() { }
+  public onLoginForm: FormGroup;
+  uid: string = '';
+  validation_messages = {
+    'email': [
+      { type: 'required', message: '*Email is required.' },
+      { type: 'pattern', message: '*Enter a valid email.' }
+    ],
+    'password': [
+      { type: 'required', message: '*Password is required.' },
+    ]
+  };
+
+  constructor(
+    public service: DataCollectorService,
+    public navCtrl: NavController,
+    public _fb: FormBuilder,
+    public utils: UtilsService) { 
+      if (localStorage.getItem('userLoggedIn') == 'true') {
+        this.navCtrl.navigateRoot(['/tabs']);
+      }
+    }
 
   ngOnInit() {
+    this.onLoginForm = this._fb.group({
+      email: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$'),
+      ])],
+      password: ['', Validators.compose([
+        Validators.required,
+      ])]
+    });
   }
 
+  loginAccount(data) {
+    var self = this;
+    self.utils.presentLoading();
+    firebase.auth().signInWithEmailAndPassword(data.email, data.password).then((user) => {
+      if (user) {
+        self.uid = user.user.uid;
+        self.getUserData();
+      }
+    }).catch((e) => {
+      debugger;
+      self.utils.stopLoading();
+      self.utils.createToast(e.message);
+    });
+  }
+
+  getUserData() {
+    var self = this;
+    firebase.database().ref().child('users/' + self.uid)
+      .once('value', (snapshot) => {
+        var user = snapshot.val();
+        if (user) {
+        if ( !user.isBlock) {
+          self.utils.stopLoading();
+          if (localStorage.getItem("deviceToken")) {
+            var token: string = localStorage.getItem("deviceToken");
+            var tokens: Array<any> = user.deviceTokens || [];
+  
+            if (tokens.indexOf(token) < 0) {
+              tokens.push(token);
+              firebase.database().ref().child(`users/${user.uid}/deviceTokens`).set(tokens);
+            }
+          }
+          localStorage.setItem('fullName', user.fullName);
+          localStorage.setItem('profileUrl', user.profileUrl || '');
+          localStorage.setItem('email', user.email);
+          localStorage.setItem('userLoggedIn', 'true');
+          localStorage.setItem('uid', user.uid);
+          self.navCtrl.navigateRoot(['/tabs']);
+          this.service.publishSomeData({
+            user: user
+          })
+          
+        }
+        else{
+          self.utils.createToast("You are blocked by Admin.For any query please Contact Admin!!");
+          self.utils.stopLoading();
+        }
+      }
+
+      }).catch((e) => {
+        self.utils.stopLoading();
+        self.utils.createToast(e.message);
+      });
+  }
 }

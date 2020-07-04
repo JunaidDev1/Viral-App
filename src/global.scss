@@ -9,24 +9,26 @@
  * https://ionicframework.com/docs/layout/global-stylesheets
  */
 
+
 /* Core CSS required for Ionic components to work properly */
+
 @import "~@ionic/angular/css/core.css";
 
 /* Basic CSS for apps built with Ionic */
+
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
 @import "~@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
+
 @import "~@ionic/angular/css/padding.css";
 @import "~@ionic/angular/css/float-elements.css";
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
-
 $customColors: ("lighter");
-
 @each $color in $customColors {
     .ion-color-#{$color} {
         --ion-color-base: var(--ion-color-#{$color}) !important;
@@ -157,7 +159,6 @@ ion-button {
     padding: 50% 7%;
     z-index: 999999;
     background: rgba(0, 0, 0, 0.5);
-
     .innerDiv {
         background-color: #ffffff;
         padding: 16px;
@@ -228,4 +229,10 @@ ion-header {
     ion-slides {
         --bullet-background-active: #ffffff !important;
     }
+}
+
+.errorMsg {
+    font-size: 12px;
+    color: red;
+    margin-top: 5px;
 }

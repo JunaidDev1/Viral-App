@@ -38,65 +38,71 @@
 
 
 <ion-header class="gradientHeader">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>search contact to chat</ion-title>
-  </ion-toolbar>
-  <div style="padding: 0 16px 16px 16px;">
-    <ion-item class="rounded" lines="none">
-      <ion-avatar slot="start">
-        <img src="./assets/imgs/search (2).png">
-      </ion-avatar>
-      <ion-input type="text" placeholder="Search..."></ion-input>
-    </ion-item>
-  </div>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title>search contact to chat</ion-title>
+    </ion-toolbar>
+    <div style="padding: 0 16px 16px 16px;">
+        <ion-item class="rounded" lines="none">
+            <ion-avatar slot="start">
+                <img src="./assets/imgs/search (2).png">
+            </ion-avatar>
+            <ion-input type="text" placeholder="Search..."></ion-input>
+        </ion-item>
+    </div>
 </ion-header>
 
 <ion-content fullScreen="true">
 
-  <ion-item class="bg-none" lines="none">
-    <ion-label class="bold dark">Favorite Contacts</ion-label>
-  </ion-item>
-  <div class="horizontalScroll ion-padding-start">
-    <div class="anItem ion-text-center">
-      <img routerLink="/chat-screen" src="./assets/imgs/user1.png">
-      <p class="appTxt dark bold">Erik Burke</p>
-    </div>
-    <div class="anItem ion-text-center">
-      <img routerLink="/chat-screen" src="./assets/imgs/user2.png">
-      <p class="appTxt dark bold">Angelina Julie</p>
-    </div>
-    <div class="anItem ion-text-center">
-      <img routerLink="/chat-screen" src="./assets/imgs/user3.png">
-      <p class="appTxt dark bold">Marrie Burke</p>
-    </div>
-    <div class="anItem ion-text-center">
-      <img routerLink="/chat-screen" src="./assets/imgs/user4.png">
-      <p class="appTxt dark bold">Burke Erik</p>
-    </div>
-  </div>
+    <ion-item class="bg-none" lines="none">
+        <ion-label class="bold dark">Favorite Contacts</ion-label>
+    </ion-item>
+    <div class="horizontalScroll ion-padding-start">
+        <div class="anItem ion-text-center" *ngFor="let favorite of service.usersData[this.uid]?.favorites">
+            <img (click)="toChat(favorite)" [src]="service.usersData[favorite]?.profileUrl ||'./assets/imgs/user3.png'">
+            <p class="appTxt dark bold">{{service.usersData[favorite]?.fullName}}</p>
+        </div>
 
-  <ion-item class="bg-none" lines="none">
-    <ion-label class="bold dark">Recent Chats</ion-label>
-  </ion-item>
-  <ion-slides [options]="slideOpts">
-    <ion-slide *ngFor="let slide of slides">
-      <ion-grid>
-        <ion-row>
-          <ion-col size="12">
-            <img routerLink="/chat-screen" [src]="slide.img">
-            <p style="display: none;" class="imageHead bold dark">
-              Janice Greene <br /> <small class="gray">
-                <ion-icon name="time-outline"></ion-icon> 4h ago
+        <div class="ion-padding" *ngIf="!service.usersData[this.uid]?.favorites">
+            <p class="ion-padding ion-text-center"> No Favorite Added Yet!</p>
+        </div>
+        <!-- <div class="anItem ion-text-center">
+            <img routerLink="/chat-screen" src="./assets/imgs/user2.png">
+            <p class="appTxt dark bold">Angelina Julie</p>
+        </div>
+        <div class="anItem ion-text-center">
+            <img routerLink="/chat-screen" src="./assets/imgs/user3.png">
+            <p class="appTxt dark bold">Marrie Burke</p>
+        </div>
+        <div class="anItem ion-text-center">
+            <img routerLink="/chat-screen" src="./assets/imgs/user4.png">
+            <p class="appTxt dark bold">Burke Erik</p>
+        </div> -->
+    </div>
+
+    <ion-item class="bg-none" lines="none">
+        <ion-label class="bold dark">Recent Chats</ion-label>
+    </ion-item>
+    <ion-slides [options]="slideOpts">
+        <ion-slide *ngFor="let user of users">
+            <ion-grid *ngIf="user.alreadyChated === true">
+                <ion-row>
+                    <ion-col size="12">
+                        <img (click)="toChat(user.uid)" [src]="user.profileUrl || './assets/imgs/user3.png'">
+                        <p style="display: none;" class="imageHead bold dark">
+                            {{user.fullName}} <br /> <small class="gray">
+                <ion-icon name="time-outline"></ion-icon> {{user.lastMessageTime}}
               </small>
-            </p>
-            <p style="visibility: hidden;">Hidden text</p>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-slide>
-  </ion-slides>
+                        </p>
+                        <p style="visibility: hidden;">Hidden text</p>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-slide>
+
+    </ion-slides>
+
 
 </ion-content>
