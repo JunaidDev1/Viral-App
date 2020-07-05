@@ -24,7 +24,12 @@ const routes: Routes = [
             path: 'roast-battle',
             loadChildren: () =>
               import('../roast-battle/roast-battle.module').then(m => m.RoastBattlePageModule)
-          }
+          },
+          {
+            path: 'nemesis',
+            loadChildren: () =>
+              import('../nemesis/nemesis.module').then(m => m.NemesisPageModule)
+          },
         ]
       },
       {

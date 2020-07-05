@@ -12,7 +12,7 @@
 <ion-content>
 
   <ion-row style="padding: 10px;">
-    <ion-col *ngFor="let img of imgs; index as i" size="{{i%3==0? 12: 6}}">
+    <ion-col routerLink="/view-story" *ngFor="let img of imgs; index as i" size="{{i%3==0? 12: 6}}">
       <div [style.background]="'url(' + img + ')'" class="storyItem rounded">
         <ion-item class="ion-no-padding bg-none" lines="none">
           <ion-avatar slot="start">

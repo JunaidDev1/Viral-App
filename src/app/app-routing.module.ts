@@ -98,6 +98,19 @@ const routes: Routes = [
     path: 'image-viewer',
     loadChildren: () => import('./image-viewer/image-viewer.module').then( m => m.ImageViewerPageModule)
   },
+  {
+    path: 'post-comments',
+    loadChildren: () => import('./post-comments/post-comments.module').then( m => m.PostCommentsPageModule)
+  },
+  {
+    path: 'view-story',
+    loadChildren: () => import('./view-story/view-story.module').then( m => m.ViewStoryPageModule)
+  },
+  {
+    path: 'nemesis',
+    loadChildren: () => import('./nemesis/nemesis.module').then( m => m.NemesisPageModule)
+  },
+
 ];
 
 @NgModule({

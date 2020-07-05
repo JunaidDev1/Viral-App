@@ -1,0 +1,73 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title></ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content>
+
+  <div class="topInfo">
+    <p class="progressBar ion-no-margin"></p>
+    <ion-item lines="none" class="bg-none">
+      <ion-avatar slot="start">
+        <img src="./assets/imgs/user3.png">
+      </ion-avatar>
+      <ion-label>
+        <h5 class="white">Your Story</h5>
+        <p class="gray">8h</p>
+      </ion-label>
+      <ion-icon routerLink="/tabs/tab3" routerDirection="back" name="close" slot="end" color="lighter"></ion-icon>
+    </ion-item>
+  </div>
+
+  <img class="storyImg" src="./assets/imgs/Video BG.png">
+
+  <ion-item (click)="showViewers=true" lines="none" class="bg-none bottomViews">
+    <img [src]="allUsers[0].profileUrl" slot="start">
+    <img [src]="allUsers[1].profileUrl" slot="start" class="overlayImg">
+    <ion-label>
+      <p class="white">{{allUsers.length}} Viewers</p>
+    </ion-label>
+    <ion-icon name="ellipsis-vertical" slot="end" color="lighter"></ion-icon>
+  </ion-item>
+
+</ion-content>
+
+
+<div (click)="closeModal($event)" id="mainContainer" *ngIf="showViewers" class="viewerSheet">
+  <div class="innerContent bg-white ion-padding">
+    <ion-item lines="none" class="ion-no-padding">
+      <ion-label>
+        <p class="dark">{{allUsers.length}} Viewers</p>
+      </ion-label>
+      <ion-icon name="close" slot="end" (click)="showViewers=false"></ion-icon>
+    </ion-item>
+    <ion-row class="borderBottom">
+      <ion-col size="4">
+        <img class="boxshadow" src="./assets/imgs/Video BG.png">
+      </ion-col>
+      <ion-col size="4">
+        <div class="addStory">
+          <ion-fab style="margin-top: -2.2em;" vertical="center" horizontal="center">
+            <ion-fab-button size="small">
+              <ion-icon name="add"></ion-icon>
+            </ion-fab-button>
+          </ion-fab>
+        </div>
+      </ion-col>
+    </ion-row>
+    <div class="scrollingContent">
+      <ion-item *ngFor="let user of allUsers" lines="none">
+        <ion-avatar slot="start">
+          <span class="onlineIcon"></span>
+          <img [src]="user.profileUrl">
+        </ion-avatar>
+        <ion-label>
+          <h5>Angelina Julie</h5>
+          <p class="gray">nathanwilson</p>
+        </ion-label>
+        <ion-icon name="ellipsis-vertical" slot="end" color="medium"></ion-icon>
+      </ion-item>
+    </div>
+  </div>
+</div>

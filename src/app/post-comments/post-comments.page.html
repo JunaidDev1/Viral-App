@@ -1,0 +1,76 @@
+<ion-header class="gradientHeader">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>comments</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullScreen="true" color="lighter">
+
+  <ion-row *ngFor="let comment of comments" class="mainComment">
+    <ion-col size="2" class="ion-text-center">
+      <img class="userAvatar" [src]="comment.profileUrl">
+    </ion-col>
+    <ion-col size="10">
+      <ion-item lines="none" class="ion-no-padding">
+        <ion-label class="ion-text-wrap">
+          <h2 class="dark fw500">{{comment.fullName}} <small class="gray">&nbsp; 5 hours ago</small></h2>
+          <p class="gray">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Magnam nisi corrupt</p>
+          <img *ngIf="comment.video" [src]="comment.video">
+        </ion-label>
+      </ion-item>
+      <ion-button style="margin-left: -10px;" fill="clear" color="medium" size="small" class="ion-margin-right">
+        <img src="./assets/imgs/like.png"> 26
+      </ion-button>
+      <ion-button fill="clear" color="medium" size="small" class="ion-margin-right">
+        <img src="./assets/imgs/dislike.png"> 11
+      </ion-button>
+      <ion-button fill="clear" color="medium" size="small" class="ion-margin-right">
+        REPLY
+      </ion-button>
+      <p *ngIf="comment.replies" (click)="comment.showReplies=!comment.showReplies" class="appTxt dark bold mb-0">
+        <span *ngIf="!comment.showReplies">- View {{comment.replies.length}} replies</span>
+        <span *ngIf="comment.showReplies">- Hide {{comment.replies.length}} replies</span>
+      </p>
+      <div *ngIf="comment.showReplies">
+        <div *ngFor="let reply of comment.replies" class="mainComment">
+          <ion-item lines="none" class="ion-no-padding">
+            <ion-label class="ion-text-wrap">
+              <h2 class="dark fw500">{{reply.fullName}} <small class="gray">&nbsp; 5 hours ago</small></h2>
+              <p class="gray">Lorem ipsum dolor sit</p>
+            </ion-label>
+          </ion-item>
+          <ion-button style="margin-left: -10px;" fill="clear" color="medium" size="small" class="ion-margin-right">
+            <img src="./assets/imgs/like.png"> 26
+          </ion-button>
+          <ion-button fill="clear" color="medium" size="small" class="ion-margin-right">
+            <img src="./assets/imgs/dislike.png"> 11
+          </ion-button>
+          <ion-button fill="clear" color="medium" size="small" class="ion-margin-right">
+            REPLY
+          </ion-button>
+        </div>
+      </div>
+    </ion-col>
+  </ion-row>
+
+</ion-content>
+
+
+<ion-footer>
+  <ion-row class="bg-white" style="padding: 10px;">
+    <ion-col size="2" class="ion-text-center">
+      <img src="./assets/imgs/Video.png">
+    </ion-col>
+    <ion-col size="10">
+      <ion-item lines="none">
+        <ion-input typ="text" placeholder="Write a comment...">
+        </ion-input>
+        <img class="slotedEnd" src="/assets/imgs/GIF.png" slot="end">
+        <img class="slotedEnd" src="/assets/imgs/smile 1.png" slot="end">
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</ion-footer>

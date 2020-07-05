@@ -16,6 +16,8 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import * as firebase from 'firebase';
 import { Crop } from '@ionic-native/crop/ngx';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+
+
 var firebaseConfig = {
   apiKey: "AIzaSyA5OhUVfXueVXKzHkswdZK_87f_m_b8h9A",
   authDomain: "nemesis-d3a6e.firebaseapp.com",
@@ -29,13 +31,17 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
+
+
 @NgModule({
   declarations: [
     AppComponent,
     SelectContactPage,
-    ConfirmContactPage
+    ConfirmContactPage,
   ],
-  entryComponents: [],
+  entryComponents: [
+    
+  ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
