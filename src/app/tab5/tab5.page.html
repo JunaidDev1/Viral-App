@@ -26,7 +26,7 @@
         <div *ngSwitchCase="'charts'">
             <h5 class="bold">1-4 Nemesis</h5>
             <ion-row class="musicList">
-                <ion-col *ngFor="let music of allMusics; index as i" size="6" (click)="playAudio(music)">
+                <ion-col *ngFor="let music of allMusics; index as i" size="6" (click)="show(music)">
                     <div class="chartItem bg-white rounded lightshadow">
                         <img [src]="music.img">
                         <span>{{i+1}}</span>
@@ -56,7 +56,8 @@
                                 <h5>Song</h5>
                                 <p>Las Vegas</p>
                             </ion-label>
-                            <ion-icon class="mt-0" size="small" color="medium" name="ellipsis-vertical" slot="end"></ion-icon>
+                            <ion-icon class="mt-0" size="small" color="medium" name="ellipsis-vertical" slot="end">
+                            </ion-icon>
                         </ion-item>
                     </div>
                 </ion-col>
@@ -69,9 +70,9 @@
                 <img src="./assets/imgs/music1.png">
                 <p class="dark bold">The Project Delinium</p>
                 <p class="mt-0"><small>
-            Details is the sole studio album by the musical group Frou Frou.
-            State and in the movie The Project delirium
-          </small></p>
+                        Details is the sole studio album by the musical group Frou Frou.
+                        State and in the movie The Project delirium
+                    </small></p>
             </div>
             <h5 class="bold">Songs</h5>
             <ion-row class="musicList">
@@ -83,7 +84,8 @@
                                 <h5>Song</h5>
                                 <p>Las Vegas</p>
                             </ion-label>
-                            <ion-icon class="mt-0" size="small" color="medium" name="ellipsis-vertical" slot="end"></ion-icon>
+                            <ion-icon class="mt-0" size="small" color="medium" name="ellipsis-vertical" slot="end">
+                            </ion-icon>
                         </ion-item>
                     </div>
                 </ion-col>
@@ -119,20 +121,24 @@
             <img class="rounded" src="./assets/imgs/music4.png">
         </ion-col>
         <ion-col size="9">
-            <ion-range min="0" [max]="this.audio.duration" [value]="currentTime" (ionChange)="seek($event)"></ion-range>
+            <ion-range min="0" [max]="this.totalTime" [value]="currentTime" (onChange)="updateProgress()" (touchend)="seek()" (mouseup)="seek()" #range></ion-range>
             <p class="rangebarTime white">
-                <small><span class="ion-float-right">3:45</span></small>
+                <small><span class="ion-float-right">{{this.duration}}</span></small>
             </p>
             <ion-item class="ion-no-padding bg-none mt-0" lines="none">
                 <ion-label routerLink="/music-player">
                     <h5 class="white">{{this.service.currentMusic.musicName}}</h5>
                     <p class="white">{{this.service.currentMusic.musicArtist}}</p>
                 </ion-label>
+
                 <p slot="end">
-                    <ion-icon name="play-skip-back-circle-outline"></ion-icon>
+                    <audio #player>
+                        <source [src]="service.currentMusic.musicUrl"  type="audio/mpeg">
+                    </audio>
+                    <ion-icon name="play-skip-back-circle-outline" (click)="prev()"></ion-icon>
                     <ion-icon class="playIcon" *ngIf="this.service.currentMusic.played" (click)="pauseAudio(this.service.currentMusic)" name="pause-circle"></ion-icon>
                     <ion-icon class="playIcon" *ngIf="!this.service.currentMusic.played" (click)="playAudio(this.service.currentMusic)" name="play-circle-outline"></ion-icon>
-                    <ion-icon name="play-skip-forward-circle-outline"></ion-icon>
+                    <ion-icon name="play-skip-forward-circle-outline" (click)="next()"></ion-icon>
                 </p>
             </ion-item>
         </ion-col>

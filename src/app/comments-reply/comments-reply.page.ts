@@ -1,51 +1,17 @@
-import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, ViewChild } from '@angular/core';
 import { DataCollectorService } from '../data-collector.service';
-import * as moment from 'moment';
-import { IonContent } from '@ionic/angular';
-import * as firebase from 'firebase';
 import { UtilsService } from '../utils.service';
-import { Router } from '@angular/router';
+import * as moment from 'moment';
+import * as firebase from 'firebase';
+import { IonContent } from '@ionic/angular';
 
 @Component({
-  selector: 'app-post-comments',
-  templateUrl: './post-comments.page.html',
-  styleUrls: ['./post-comments.page.scss'],
+  selector: 'app-comments-reply',
+  templateUrl: './comments-reply.page.html',
+  styleUrls: ['./comments-reply.page.scss'],
 })
-export class PostCommentsPage implements OnInit {
-  @ViewChild(IonContent, { read: IonContent, static: false }) content: IonContent;
-  comments: any = [
-    {
-      profileUrl: './assets/imgs/user1.png',
-      fullName: 'Angelina Julie',
-      replies: [
-        { fullName: 'Marrie Doe' },
-        { fullName: 'Smith Jam' },
-        { fullName: 'John Doe' }
-      ]
-    },
-    {
-      profileUrl: './assets/imgs/user2.png',
-      fullName: 'Samya Julie',
-      video: './assets/imgs/post2.png'
-    },
-    {
-      profileUrl: './assets/imgs/user3.png',
-      fullName: 'Marrie Julie',
-      replies: [
-        { fullName: 'Marrie Doe' },
-        { fullName: 'Smith Jam' },
-        { fullName: 'John Doe' },
-        { fullName: 'Marrie Doe' },
-        { fullName: 'Smith Jam' },
-        { fullName: 'John Doe' }
-      ]
-    }
-  ]
-
-  allComments:any =[];
-  showBottom: any=false;
-  showTop: any=true;
-  public comment:any;
+export class CommentsReplyPage implements OnInit {
+  comment: any;
   commentsImages: any=[];
   commentsVideos: any=[];
   commentImgObj:any=[];
@@ -53,35 +19,20 @@ export class PostCommentsPage implements OnInit {
   commentVideoObj:any=[];
   commentVideoUrl:any=[];
   commentIndex: any;
+  text:any;
+  @ViewChild(IonContent, { read: IonContent, static: false }) content: IonContent;
   currentPlayingVideo: HTMLVideoElement;
- 
-  constructor(public service:DataCollectorService, public utils:UtilsService, public zone:NgZone, public router:Router) { 
-    if(this.service.postComments){
-      this.allComments=this.service.postComments;
-      this.scrollToBottom();
-    }
-    if(this.allComments){
-    for(var i=0;i<this.allComments.length;i++){
-      this.allComments[i].commentTimestamp=moment(this.allComments[i].timestamp).fromNow();
-      this.service.getUser(this.allComments[i].uid);
-      if(this.allComments[i].replies){
-        for(var j=0;j<this.allComments[i].replies.length;j++){
-          this.allComments[i].replies[j].commentTimestamp=moment(this.allComments[i].replies[j].timestamp).fromNow();
-          this.service.getUser(this.allComments[i].replies[j].uid);
-        }
-      }
-     
-    }
 
-  }
+  constructor(public service:DataCollectorService, public utils:UtilsService, public zone:NgZone) { 
+    this.comment=this.service.currentComment;
+    this.commentIndex=this.service.commentIndex;
+  
+    
   }
 
-  toCommentIndex(i){
-  this.service.currentComment=this.allComments[i];
-  this.service.commentIndex=i;
-  this.router.navigate(['/comments-reply']) 
-  }
 
+  ngOnInit() {
+  }
 
   toGalleryMedia() {
     var el = document.getElementById('galleryMedia');
@@ -89,28 +40,28 @@ export class PostCommentsPage implements OnInit {
   }
 
   onChangeFileGallery(event: EventTarget) {
+    
     console.log(event);
     let eventObj: MSInputMethodContext = <MSInputMethodContext>event;
     let target: HTMLInputElement = <HTMLInputElement>eventObj.target;
     let files: FileList = target.files;
     var self = this;
     for (var a = 0; a < files.length; a++) {
+      debugger;
       if (files[a].type == 'image/png' || files[a].type == 'image/jpeg') {
+        debugger;
         this.commentImgObj.push(files[a]);
         (function (file) {
           var imageReader = new FileReader();
           imageReader.onload = (file) => {
-            debugger;
-           self.commentImgUrl.push(imageReader.result);
-           if(self.commentImgUrl.length){
-            self.galleryMedia();
-          }
-         
+            self.commentImgUrl.push(imageReader.result);
+            if(self.commentImgUrl){
+              self.galleryMedia();
+            }
           }
          
           imageReader.readAsDataURL(file)
         })(files[a]);
-        
       }
       else {
         this.commentVideoObj.push(files[a]);
@@ -122,13 +73,47 @@ export class PostCommentsPage implements OnInit {
               self.galleryVideo();
             }
           }
-          videoReader.readAsDataURL(file) 
-         
+          
+          
+          videoReader.readAsDataURL(file)
         })(files[a]);
-      
       }
     }
- 
+   
+  }
+
+  sendComment(){
+    if (!this.text || !this.commentsImages || !this.commentsVideos) {
+      return;
+    }
+    var updates={};
+    var commentData:any={
+      uid:localStorage.getItem('uid'),
+      comment:this.text || '',
+      timestamp:Number(new Date())
+    }
+    commentData.commentTimestamp=moment(Number(new Date())).fromNow();
+    if (this.commentsImages.length) {
+      commentData.commentsImages = this.commentsImages;
+    }
+    if (this.commentsVideos.length) {
+      commentData.commentsVideos = this.commentsVideos;
+    }
+    if(!this.comment.replies){
+      this.comment.replies=[];
+    }
+    if(this.comment.replies){
+      this.comment.replies.push(commentData);
+    }
+
+    updates['posts/'+this.service.postKey+'/comments/'+this.commentIndex+'/replies']=this.comment.replies;
+    this.scrollToBottom();
+    firebase.database().ref().update(updates).then(()=>{
+    this.utils.createToast("Posted!");
+    this.utils.stopLoading();
+    this.text="";
+    })
+
   }
 
   onPlayingVideo(event) {
@@ -147,40 +132,6 @@ export class PostCommentsPage implements OnInit {
     }
   }
 
-  sendComment(){
-    debugger;
-   
-    if (this.comment || this.commentsImages.length || this.commentsVideos.length) {
-    var updates={};
-    var commentData:any={
-      uid:localStorage.getItem('uid'),
-      comment:this.comment || '',
-      timestamp:Number(new Date())
-    }
-    commentData.commentTimestamp=moment(Number(new Date())).fromNow();
-    if (this.commentsImages.length) {
-      commentData.commentsImages = this.commentsImages;
-    }
-    if (this.commentsVideos.length) {
-      commentData.commentsVideos = this.commentsVideos;
-    }
-    this.allComments.push(commentData);
-    updates['posts/'+this.service.postKey+'/comments']=this.allComments;
-    this.scrollToBottom();
-    firebase.database().ref().update(updates).then(()=>{
-    this.utils.createToast("Comment Posted!");
-    this.utils.stopLoading();
-    this.comment="";
-    })
-  }
-  else{
-    this.utils.stopLoading();
-    return;
-    
-  }
-
-  }
-
   scrollToBottom() {
     setTimeout(() => {
       if (this.content.scrollToBottom) {
@@ -192,7 +143,7 @@ export class PostCommentsPage implements OnInit {
 
   galleryMedia() {
     var self = this;
-    this.utils.presentLoading('Sending File');
+    this.utils.presentLoading('Sending Image');
     this.zone.run(() => {
       debugger;
       for (var i = 0; i < self.commentImgUrl.length; i++) {
@@ -203,7 +154,6 @@ export class PostCommentsPage implements OnInit {
         imageRef.putString(self.commentImgUrl[i], firebase.storage.StringFormat.DATA_URL).then((snapshot) => {
           firebase.storage().ref('profileImages/' + snapshot.metadata.name).getDownloadURL().then((url) => {
             self.commentsImages.push(url);
-            debugger;
             var j = 0;
 
             if (j == self.commentImgObj.length - 1) {
@@ -231,7 +181,7 @@ export class PostCommentsPage implements OnInit {
   }
   galleryVideo() {
     var self = this;
-    this.utils.presentLoading('Sending File');
+    this.utils.presentLoading('Sending Image');
     this.zone.run(() => {
       for (var i = 0; i < self.commentVideoUrl.length; i++) {
         let storageRef = firebase.storage().ref();
@@ -258,10 +208,5 @@ export class PostCommentsPage implements OnInit {
 
     })
 
-  }
-
-
-  ngOnInit() {
-  }
-
+}
 }

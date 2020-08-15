@@ -9,9 +9,9 @@
 
 <ion-content fullScreen="true" color="lighter">
 
-    <ion-row *ngFor="let comment of allComments; index as i" class="mainComment">
+    <ion-row class="mainComment">
         <ion-col size="2" class="ion-text-center">
-            <img class="userAvatar" [src]="service.usersData[comment.uid].profileUrl">
+            <img class="userAvatar" [src]="service.usersData[comment.uid]?.profileUrl">
         </ion-col>
         <ion-col size="10">
             <ion-item lines="none" class="ion-no-padding">
@@ -30,7 +30,7 @@
             <ion-button fill="clear" color="medium" size="small" class="ion-margin-right">
                 <img src="./assets/imgs/dislike.png"> 11
             </ion-button>
-            <ion-button fill="clear" color="medium" size="small" class="ion-margin-right" (click)="toCommentIndex(i)">
+            <ion-button fill="clear" color="medium" size="small" class="ion-margin-right">
                 REPLY
             </ion-button>
             <p *ngIf="comment.replies" (click)="comment.showReplies=!comment.showReplies" class="appTxt dark bold mb-0">
@@ -55,7 +55,7 @@
                     <ion-button fill="clear" color="medium" size="small" class="ion-margin-right">
                         <img src="./assets/imgs/dislike.png"> 11
                     </ion-button>
-                    <ion-button fill="clear" color="medium" size="small" class="ion-margin-right" (click)="toCommentIndex(i)">
+                    <ion-button fill="clear" color="medium" size="small" class="ion-margin-right">
                         REPLY
                     </ion-button>
                 </div>
@@ -74,7 +74,7 @@
         </ion-col>
         <ion-col size="10">
             <ion-item lines="none">
-                <ion-input type="text" [(ngModel)]="comment" (keyup.enter)="sendComment()" placeholder="Write a comment...">
+                <ion-input type="text" [(ngModel)]="text" (keyup.enter)="sendComment()" placeholder="Write a comment...">
                 </ion-input>
                 <img class="slotedEnd" src="/assets/imgs/GIF.png" slot="end">
                 <img class="slotedEnd" src="/assets/imgs/smile 1.png" slot="end">

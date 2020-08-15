@@ -34,6 +34,7 @@ export class Tab1Page implements OnInit {
   postVideoUrl: any = [];
   postVideos: any = [];
   currentPlaying: HTMLVideoElement = null;
+  
   constructor(
     public router: Router,
     public actionSheetCtrl: ActionSheetController,
@@ -63,7 +64,7 @@ export class Tab1Page implements OnInit {
         }
         var nativeElement = player.nativeElement;
         const inView = this.isElementInViewPort(nativeElement);
-        debugger;
+       
         if (inView) {
           this.currentPlaying = nativeElement;
           this.currentPlaying.muted = true;
@@ -120,7 +121,6 @@ export class Tab1Page implements OnInit {
     let files: FileList = target.files;
     var self = this;
     for (var a = 0; a < files.length; a++) {
-      debugger;
       if (files[a].type == 'image/png' || files[a].type == 'image/jpeg') {
         this.postImgObj.push(files[a]);
         (function (file) {
@@ -242,6 +242,12 @@ export class Tab1Page implements OnInit {
 
   }
 
+  toComments(i){
+     this.service.postComments=this.allPosts[i].comments;
+    this.service.postKey=this.allPosts[i].key;
+    this.router.navigate(['/post-comments']);
+  }
+
   galleryVideo() {
     var self = this;
     this.zone.run(() => {
@@ -290,7 +296,7 @@ export class Tab1Page implements OnInit {
     }
     firebase.database().ref('posts/').push(postData).key;
     this.createPost = false;
-    debugger;
+  
     this.allPosts.unshift(postData);
     this.utils.stopLoading();
     this.postImages = [];

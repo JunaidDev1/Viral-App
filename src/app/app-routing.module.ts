@@ -110,6 +110,10 @@ const routes: Routes = [
     path: 'nemesis',
     loadChildren: () => import('./nemesis/nemesis.module').then( m => m.NemesisPageModule)
   },
+  {
+    path: 'comments-reply',
+    loadChildren: () => import('./comments-reply/comments-reply.module').then( m => m.CommentsReplyPageModule)
+  },
 
 ];
 

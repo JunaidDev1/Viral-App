@@ -1,30 +1,30 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>stories</ion-title>
-    <ion-buttons slot="end">
-      <ion-button>
-        <ion-icon name="add-circle-outline" slot="icon-only"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>stories</ion-title>
+        <ion-buttons slot="end">
+            <ion-button>
+                <ion-icon name="add-circle-outline" slot="icon-only"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-  <ion-row style="padding: 10px;">
-    <ion-col routerLink="/view-story" *ngFor="let img of imgs; index as i" size="{{i%3==0? 12: 6}}">
-      <div [style.background]="'url(' + img + ')'" class="storyItem rounded">
-        <ion-item class="ion-no-padding bg-none" lines="none">
-          <ion-avatar slot="start">
-            <img src="./assets/imgs/user1.png">
-          </ion-avatar>
-          <ion-label>
-            <h5>Mikke</h5>
-            <p><small>Wed 17 apr</small></p>
-          </ion-label>
-        </ion-item>
-      </div>
-    </ion-col>
-  </ion-row>
+    <ion-row style="padding: 10px;">
+        <ion-col (click)="openStoryViewer(index)" *ngFor="let story of stories; index as i" size="{{i%3==0? 12: 6}}">
+            <div [style.background]="'url(' + story.items[0].media + ')'" class="storyItem rounded">
+                <ion-item class="ion-no-padding bg-none" lines="none">
+                    <ion-avatar slot="start">
+                        <img [src]="story.userPicture">
+                    </ion-avatar>
+                    <ion-label>
+                        <h5>{{story.userName}}</h5>
+                        <p><small>Wed 17 apr</small></p>
+                    </ion-label>
+                </ion-item>
+            </div>
+        </ion-col>
+    </ion-row>
 
 </ion-content>

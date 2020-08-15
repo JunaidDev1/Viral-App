@@ -11,6 +11,11 @@ export class DataCollectorService {
   public fooSubject = new Subject<any>();
   currentMusic:any;
   allMusics:any=[];
+  postComments:any;
+  postKey:any;
+  currentComment:any;
+  commentIndex:any;
+
   constructor(public zone: NgZone) { }
   
 
@@ -62,11 +67,12 @@ export class DataCollectorService {
     }
   }
 
-  saveNotificationToFirebase(uid, message, title, data?) {
+  saveNotificationToFirebase(uid,mUid, message, title, data?) {
     var postData = {
       title: title,
       message: message,
       user: uid,
+      uid:mUid,
       timestamp: Number(new Date()),
       data: data || ""
     };

@@ -125,7 +125,7 @@ export class ChatScreenPage implements OnInit {
           chatKey: this.chatKey
         }
         var title = localStorage.getItem('fullName');
-        self.service.saveNotificationToFirebase(uid, message, title, data);
+        self.service.saveNotificationToFirebase(uid,localStorage.getItem('uid'), message, title, data);
         if (deviceToken) {
           self.service.sendNewNotification(title, message, deviceToken, data);
         } else {

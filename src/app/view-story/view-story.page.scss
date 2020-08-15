@@ -8,7 +8,6 @@ ion-content {
         position: fixed;
         width: 100%;
         top: 1em;
-
         .progressBar {
             margin: 0 16px;
             border-bottom: 1px solid var(--ion-color-primary);
@@ -18,14 +17,12 @@ ion-content {
         position: fixed;
         bottom: 1em;
         width: 100%;
-
         img {
             width: 40px;
             height: 40px;
             border-radius: 50%;
             object-fit: cover;
             border: 1px solid var(--ion-color-lighter);
-
             &.overlayImg {
                 margin: 0 1em 0 -3em;
             }
@@ -40,7 +37,6 @@ ion-content {
     height: 100%;
     z-index: 999999;
     background: rgba(0, 0, 0, 0.5);
-
     .innerContent {
         border-radius: 16px 16px 0 0;
         padding: 12px;
@@ -68,13 +64,11 @@ ion-content {
         .scrollingContent {
             max-height: 55vh;
             overflow-y: scroll;
-
             ion-item {
                 ion-avatar {
                     width: 60px;
                     height: 60px;
                     position: relative;
-
                     img {
                         object-fit: cover;
                         border: 1px solid var(--ion-color-primary);

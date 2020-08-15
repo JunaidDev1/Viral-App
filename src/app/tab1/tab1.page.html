@@ -14,14 +14,12 @@
     </ion-toolbar>
     <ion-row class="segmentBtns">
         <ion-col size="6">
-            <ion-button fill="clear" (click)="activeTab='feed'" [class.inactiveTab]="activeTab!='feed'"
-                [class.activeTab]="activeTab=='feed'" class="leftBtn" shape="round" expand="block">
+            <ion-button fill="clear" (click)="activeTab='feed'" [class.inactiveTab]="activeTab!='feed'" [class.activeTab]="activeTab=='feed'" class="leftBtn" shape="round" expand="block">
                 <img src="./assets/imgs/tab1.png"> Feed
             </ion-button>
         </ion-col>
         <ion-col size="6">
-            <ion-button fill="clear" routerLink="/tabs/tab1/nemesis" [class.inactiveTab]="activeTab!='nemesis'"
-                [class.activeTab]="activeTab=='nemesis'" class="rightBtn" shape="round" expand="block">
+            <ion-button fill="clear" routerLink="/tabs/tab1/nemesis" [class.inactiveTab]="activeTab!='nemesis'" [class.activeTab]="activeTab=='nemesis'" class="rightBtn" shape="round" expand="block">
                 Nemesis <img src="./assets/imgs/tab2.png">
             </ion-button>
         </ion-col>
@@ -34,7 +32,7 @@
         </ion-refresher-content>
     </ion-refresher>
     <div *ngIf="activeTab=='feed'">
-        <div *ngFor="let post of allPosts" class="newsFeedPost bg-white rounded mb-1">
+        <div *ngFor="let post of allPosts ; index as i" class="newsFeedPost bg-white rounded mb-1">
             <ion-item class="rounded" lines="none">
                 <ion-avatar (click)="othersProfile(post.uid)" slot="start">
                     <img [src]="service.usersData[post.uid].profileUrl || './assets/imgs/user3.png'">
@@ -50,8 +48,7 @@
                 <img class="w-100" [src]="post.postImages" (click)="viewImage(post.postImages)" style="height: 100%;">
             </div>
             <div *ngIf="post.postVideos">
-                <video controls class="w-100" (playing)="onPlayingVideo($event)" #player playsinline preload="auto"
-                    [poster]="post.postVideos" height="240" style="object-fit: cover !important;">
+                <video controls class="w-100" (playing)="onPlayingVideo($event)" #player playsinline preload="auto" [poster]="post.postVideos" height="240" style="object-fit: cover !important;">
                     <source [src]="post.postVideos" type="video/mp4">
                 </video>
 
@@ -75,25 +72,21 @@
             <hr />
             <ion-row class="socialBtns">
                 <ion-col size="4">
-                    <ion-button [class.activeBtn]="post.likes?.includes(this.uid)" (click)="toLike(post)"
-                        [class.gray]="!post.likes?.includes(this.uid)" expand="block"
-                        class="ion-no-padding ion-no-margin" fill="clear">
+                    <ion-button [class.activeBtn]="post.likes?.includes(this.uid)" (click)="toLike(post)" [class.gray]="!post.likes?.includes(this.uid)" expand="block" class="ion-no-padding ion-no-margin" fill="clear">
                         <div class="imgContainer">
                             <img src="./assets/imgs/like.png">
                         </div> Like
                     </ion-button>
                 </ion-col>
                 <ion-col size="4">
-                    <ion-button [class.activeBtn]="post.dislikes?.includes(this.uid)" (click)="toDislike(post)"
-                        [class.gray]="!post.dislikes?.includes(this.uid)" expand="block"
-                        class="ion-no-padding ion-no-margin" fill="clear">
+                    <ion-button [class.activeBtn]="post.dislikes?.includes(this.uid)" (click)="toDislike(post)" [class.gray]="!post.dislikes?.includes(this.uid)" expand="block" class="ion-no-padding ion-no-margin" fill="clear">
                         <div class="imgContainer">
                             <img src="./assets/imgs/dislike.png">
                         </div> Dislike
                     </ion-button>
                 </ion-col>
                 <ion-col size="4">
-                    <ion-button routerLink="/post-comments" expand="block" class="ion-no-padding ion-no-margin gray" fill="clear">
+                    <ion-button (click)="toComments(i)" expand="block" class="ion-no-padding ion-no-margin gray" fill="clear">
                         <div class="imgContainer">
                             <img src="./assets/imgs/comment.png">
                         </div> Comment
@@ -116,8 +109,7 @@
     </div>
 
 
-    <ion-fab *ngIf="activeTab=='feed' && service.currentMusic" class="mb-5" slot="fixed" vertical="bottom"
-        horizontal="end">
+    <ion-fab *ngIf="activeTab=='feed' && service.currentMusic" class="mb-5" slot="fixed" vertical="bottom" horizontal="end">
         <ion-fab-button [style.transform]="'rotate(' + rotation + 'deg)'" routerLink="/tabs/tab5">
             <img src="./assets/imgs/music.png">
         </ion-fab-button>
@@ -165,8 +157,7 @@
         </ion-row>
 
 
-        <input id="galleryMedia" style="display: none;" type="file" accept="image/jpeg, image/png, video/mp4"
-            (change)="onChangeFileGallery($event)">
+        <input id="galleryMedia" style="display: none;" type="file" accept="image/jpeg, image/png, video/mp4" (change)="onChangeFileGallery($event)">
         <ion-item lines="none">
             <img slot="start" (click)="toGalleryMedia()" src="./assets/imgs/Attach Image.png">
             <img slot="start" src="./assets/imgs/Article.png">
